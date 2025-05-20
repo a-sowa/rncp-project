@@ -2,6 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
 exports.register = async (req, res) => {
+    console.log("Données reçues pour inscription :", req.body);
   const { firstName, lastName, email, password } = req.body;
 
   try {
@@ -41,6 +42,8 @@ exports.register = async (req, res) => {
 
     res.status(201).json({ message: "Utilisateur créé avec succès ✅", userId: newUser._id });
   } catch (err) {
-    res.status(500).json({ message: "Erreur serveur", error: err.message });
-  }
+        console.error("⛔ Erreur dans register:", err); // 👈 Log complet
+        res.status(500).json({ message: "Erreur serveur", error: err.message });
+    }
+
 };

@@ -25,8 +25,6 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      minlength: 8,
-      maxlength: 20
       // Note : la complexité du mot de passe est vérifiée dans le contrôleur
     },
     role: {
