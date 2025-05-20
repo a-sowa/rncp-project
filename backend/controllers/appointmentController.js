@@ -1,9 +1,20 @@
-// controllers/appointmentController.js
 const Appointment = require("../models/Appointment");
+const Availability = require("../models/Availability");
 
 exports.createAppointment = async (req, res) => {
   try {
     const { clientName, email, service, date } = req.body;
+
+    // Cherche et réserve en une seule opération (atomique)
+    const slot = await Availability.findOneAndUpdate(
+      { date, isBooked: false },
+      { isBooked: true },
+      { new: true }
+    );
+
+    if (!slot) {
+      return res.status(400).json({ message: "Créneau déjà réservé ou inexistant." });
+    }
 
     const newAppointment = new Appointment({
       clientName,
@@ -13,11 +24,13 @@ exports.createAppointment = async (req, res) => {
     });
 
     await newAppointment.save();
-    res.status(201).json({ message: "Rendez-vous enregistré ✅", appointment: newAppointment });
+
+    res.status(201).json({ message: "Rendez-vous confirmé ✅", appointment: newAppointment });
   } catch (err) {
-    res.status(500).json({ message: "Erreur lors de l'enregistrement", error: err.message });
+    res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
 };
+
 
 exports.getAllAppointments = async (req, res) => {
   try {
