@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connexion - Art-Thérapie</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Script de connexion -->
+  <script src="./scripts/auth/login.js" defer></script>
+</head>
+<body class="bg-gray-100 font-[Inter] flex items-center justify-center min-h-screen">
+
+  <main class="bg-white shadow-lg rounded p-8 w-full max-w-md">
+    <h1 class="text-2xl font-semibold text-center text-indigo-700 mb-6">Connexion utilisateur</h1>
+
+    <form id="login-form" class="space-y-4">
+      <!-- Email -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Adresse e-mail</label>
+        <input type="email" id="email" name="email" required
+               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+      </div>
+
+      <!-- Mot de passe -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+        <input type="password" id="password" name="password" required
+               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+      </div>
+
+      <!-- Afficher mot de passe -->
+      <div class="flex items-center gap-2">
+        <input type="checkbox" id="showPassword" class="form-checkbox" />
+        <label for="showPassword" class="text-sm text-gray-600">Afficher le mot de passe</label>
+      </div>
+
+      <!-- Messages -->
+      <p id="login-error" class="text-red-600 text-sm hidden"></p>
+
+      <!-- Bouton -->
+      <button type="submit"
+              class="w-full bg-indigo-600 text-white font-semibold py-2 rounded hover:bg-indigo-700 transition">
+        Se connecter
+      </button>
+    </form>
+
+    <p class="text-center text-sm text-gray-600 mt-6">
+      Vous n'avez pas de compte ?
+      <a href="register.html" class="text-indigo-600 hover:underline">Créer un compte</a>
+    </p>
+  </main>
+</body>
+</html>
