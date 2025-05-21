@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Disponibilités - Art-Thérapie</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Flatpickr -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
+
+  <!-- JS -->
+  <script src="./scripts/calendar/calendar-init.js" defer></script>
+</head>
+
+<body class="bg-gray-100 font-[Inter] min-h-screen p-6">
+
+  <main class="max-w-3xl mx-auto bg-white shadow rounded p-6">
+    <h1 class="text-2xl font-bold text-indigo-700 mb-6 text-center">Choisissez une date</h1>
+
+    <!-- Calendrier -->
+    <div id="calendar-container" class="mb-8">
+      <input type="text" id="calendar" class="input w-full" placeholder="Sélectionnez une date" />
+    </div>
+
+    <!-- Créneaux du jour -->
+    <div id="slots-container">
+      <h2 class="text-lg font-semibold text-gray-800 mb-4">Créneaux disponibles :</h2>
+      <div id="slots-list" class="grid gap-4">
+        <!-- Créneaux affichés ici -->
+      </div>
+    </div>
+
+    <p id="availability-error" class="text-red-600 text-sm mt-4 hidden"></p>
+  </main>
+
+</body>
+</html>
