@@ -3,12 +3,12 @@ const slotsList = document.getElementById("slots-list");
 const bookingForm = document.getElementById("booking-form");
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
-const serviceInput = document.getElementById("service");
 const slotIdInput = document.getElementById("slotId");
 const errorBox = document.getElementById("booking-error");
 const successBox = document.getElementById("booking-success");
 
 let allSlots = [];
+let selectedSlot = null;
 let token = localStorage.getItem("token");
 let userData = null;
 
@@ -17,7 +17,6 @@ async function fetchSlots() {
     const res = await fetch("http://localhost:8080/api/availability");
     const data = await res.json();
     allSlots = data.availabilities || [];
-    console.log("📅 Créneaux reçus :", allSlots);
     return allSlots;
   } catch (err) {
     console.error("Erreur lors du chargement des créneaux :", err);
@@ -53,6 +52,7 @@ function showSlots(dateISO) {
     `;
 
     card.querySelector("button").addEventListener("click", () => {
+      selectedSlot = slot;
       bookingForm.classList.remove("hidden");
       slotIdInput.value = slot._id;
     });
@@ -76,7 +76,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const uniqueISOStrings = [...new Set(allSlots.map(slot => new Date(slot.date).toDateString()))];
   const enabledDates = uniqueISOStrings.map(dateStr => new Date(dateStr));
-  console.log("📅 Dates activées dans Flatpickr :", enabledDates);
 
   flatpickr(calendarInput, {
     minDate: "today",
@@ -91,7 +90,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     onReady: function (_, __, instance) {
       const todayISO = new Date().toISOString().split("T")[0];
       const today = new Date(todayISO);
-
       if (enabledDates.some(date => date.toDateString() === today.toDateString())) {
         const [y, m, d] = todayISO.split("-");
         instance.setDate(`${d}/${m}/${y}`, true);
@@ -107,11 +105,17 @@ bookingForm.addEventListener("submit", async (e) => {
   errorBox.classList.add("hidden");
   successBox.classList.add("hidden");
 
+  if (!selectedSlot) {
+    errorBox.textContent = "Veuillez sélectionner un créneau.";
+    errorBox.classList.remove("hidden");
+    return;
+  }
+
   const body = {
     clientName: nameInput.value,
     email: emailInput.value,
-    service: serviceInput.value,
-    slotId: slotIdInput.value
+    service: "Consultation individuelle", // champ fixé
+    slotId: selectedSlot._id
   };
 
   try {
@@ -125,16 +129,16 @@ bookingForm.addEventListener("submit", async (e) => {
     });
 
     const data = await res.json();
-
     if (!res.ok) throw new Error(data.message || "Erreur lors de la réservation");
 
-    successBox.textContent = "Rendez-vous confirmé ✅";
-    successBox.classList.remove("hidden");
-    bookingForm.reset();
-    bookingForm.classList.add("hidden");
+    // Redirection
+    const slotDate = new Date(selectedSlot.date).toLocaleDateString("fr-CA");
+    const redirectUrl = `confirmation.html?date=${slotDate}&start=${selectedSlot.startTime}&end=${selectedSlot.endTime}&service=Consultation%20individuelle`;
+    window.location.href = redirectUrl;
 
   } catch (err) {
     errorBox.textContent = err.message;
     errorBox.classList.remove("hidden");
   }
 });
+
