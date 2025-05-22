@@ -7,6 +7,8 @@ const appointmentSchema = new mongoose.Schema(
     email: { type: String, required: true },
     service: { type: String, required: true },
     date: { type: Date, required: true },
+    startTime: { type: String, required: true },
+    endTime: { type: String, required: true },
     status: {
       type: String,
       enum: ["en attente", "confirmé", "annulé"],

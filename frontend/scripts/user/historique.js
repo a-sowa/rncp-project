@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const createCard = (appt) => {
       return `
         <div class="border border-gray-300 p-4 rounded">
-          <p class="text-gray-800 font-medium">${formatDate(appt.date)} - ${appt.service}</p>
+          <p class="text-gray-800 font-medium">${formatDate(appt.date)} - ${appt.startTime} → ${appt.endTime} - ${appt.service}</p>
           <p class="text-sm text-gray-500">${appt.clientName} - ${appt.email}</p>
         </div>
       `;

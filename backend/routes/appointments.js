@@ -13,4 +13,7 @@ router.get("/", verifyToken, checkRole("admin"), appointmentController.getAllApp
 // 🧑 Voir ses propres rendez-vous (utilisateur connecté)
 router.get("/my", verifyToken, appointmentController.getMyAppointments);
 
+router.delete("/:id", verifyToken, checkRole("admin"), appointmentController.cancelAppointment);
+
+
 module.exports = router;
