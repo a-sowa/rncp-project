@@ -11,6 +11,11 @@ const appointmentSchema = new mongoose.Schema(
       type: String,
       enum: ["en attente", "confirmé", "annulé"],
       default: "en attente"
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
     }
   },
   { timestamps: true }
