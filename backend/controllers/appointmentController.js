@@ -1,7 +1,7 @@
 const Appointment = require("../models/Appointment");
 const Availability = require("../models/Availability");
 
-// 🔁 Créer un nouveau rendez-vous
+// Créer un nouveau rendez-vous
 exports.createAppointment = async (req, res) => {
   try {
     const { clientName, email, service, slotId } = req.body;
@@ -43,7 +43,7 @@ exports.createAppointment = async (req, res) => {
   }
 };
 
-// 🔐 Voir tous les rendez-vous (admin uniquement)
+//  Voir tous les rendez-vous (admin uniquement)
 exports.getAllAppointments = async (req, res) => {
   try {
     const appointments = await Appointment.find().sort({ date: 1 });
@@ -53,7 +53,7 @@ exports.getAllAppointments = async (req, res) => {
   }
 };
 
-// 👤 Voir les rendez-vous d’un utilisateur connecté
+//  Voir les rendez-vous d’un utilisateur connecté
 exports.getMyAppointments = async (req, res) => {
   try {
     const userId = req.user.id;

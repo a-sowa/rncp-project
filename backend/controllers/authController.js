@@ -6,12 +6,21 @@ const jwt = require("jsonwebtoken");
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
+  // Protection contre injection NoSQL : validation stricte des types
+  if (typeof email !== "string" || typeof password !== "string") {
+    return res.status(400).json({ message: "Champs invalides" });
+  }
+
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Email ou mot de passe incorrect" });
+    if (!user) {
+      return res.status(400).json({ message: "Email ou mot de passe incorrect" });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Email ou mot de passe incorrect" });
+    if (!isMatch) {
+      return res.status(400).json({ message: "Email ou mot de passe incorrect" });
+    }
 
     const token = jwt.sign(
       { id: user._id, role: user.role },
