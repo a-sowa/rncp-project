@@ -114,12 +114,6 @@ cd ../frontend
 
 ---
 
-## 📷 Captures d’écran
-
-*(À insérer si besoin pour documenter l’interface utilisateur, admin, calendrier, etc.)*
-
----
-
 ## 📚 Auteur
 
 Axel Sowa – Développeur Web & Web Mobile  
