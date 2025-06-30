@@ -1,3 +1,4 @@
+
 fetch("components/navbar-user.html")
   .then(res => res.text())
   .then(html => {
@@ -26,21 +27,35 @@ fetch("components/navbar-user.html")
       navLinks.appendChild(li);
     };
 
-    // Liens communs à tous
     addLink("Accueil", "index.html");
     addLink("Prendre rendez-vous", "rendezvous.html");
 
     if (token) {
-      // Connecté : liens user
       addLink("Mes rendez-vous", "historique.html");
       addLink("Se déconnecter", "#", true, () => {
         localStorage.removeItem("token");
         window.location.href = "login.html";
       });
     } else {
-      // Non connecté : login et inscription
       addLink("Se connecter", "login.html");
       addLink("S'inscrire", "register.html");
+    }
+
+    const burger = document.getElementById("burger");
+    const menu = document.getElementById("nav-links");
+
+    if (burger && menu) {
+      burger.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+      });
+
+      menu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+          if (window.innerWidth < 768) {
+            menu.classList.add("hidden");
+          }
+        });
+      });
     }
   })
   .catch(err => console.error("Erreur lors du chargement de la navbar utilisateur :", err));
